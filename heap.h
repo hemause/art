@@ -788,7 +788,7 @@ class Heap {
   space::MallocSpace* non_moving_space_;
 
   // Space which we use for the kAllocatorTypeROSAlloc.
-  space::RosAllocSpace* rosalloc_space_;
+  space::RosAllocSpace* rosalloc_space1_;
 
   // Space which we use for the kAllocatorTypeDlMalloc.
   space::DlMallocSpace* dlmalloc_space_;
