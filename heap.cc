@@ -1269,7 +1269,16 @@ void Heap::RecordFree(uint64_t freed_objects, int64_t freed_bytes) {
   }
 }
 
-space::RosAllocSpace* Heap::GetRosAllocSpace(gc::allocator::RosAlloc* rosalloc) const {
+space::RosAllocSpace* Heap::GetRosAllocSpace(bool rep_flg) const {
+  switch(rep_flg){
+    case true:
+      return rosalloc_space1_;
+    case false:
+      return rosalloc_space2_;
+  }
+}
+ 
+space::RosAllocSpace* Heap::GetRosAllocSpace(gc::allocator::RosAlloc* rosalloc, bool rep_flg) const {
   for (const auto& space : continuous_spaces_) {
     if (space->AsContinuousSpace()->IsRosAllocSpace()) {
       if (space->AsContinuousSpace()->AsRosAllocSpace()->GetRosAlloc() == rosalloc) {

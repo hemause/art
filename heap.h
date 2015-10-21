@@ -523,8 +523,13 @@ class Heap {
     return dlmalloc_space_;
   }
 
-  space::RosAllocSpace* GetRosAllocSpace() const {
-    return rosalloc_space_;
+  space::RosAllocSpace* GetRosAllocSpace(bool rep_flg) const {
+    switch(rep_flg){
+      case true:
+        return rosalloc_space1_;
+      case false:
+        return rosalloc_space2_;
+    }
   }
 
   // Return the corresponding rosalloc space.
