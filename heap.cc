@@ -1731,8 +1731,13 @@ void Heap::TransitionCollector(CollectorType collector_type) {
         // Unset the pointers just in case.
         if (dlmalloc_space_ == main_space_) {
           dlmalloc_space_ = nullptr;
-        } else if (rosalloc_space_ == main_space_) {
-          rosalloc_space_ = nullptr;
+        } else if (rosalloc_space1_ == main_space_ || rosalloc_space2_ == main_space_) {
+          if(rosalloc_space1_ == main_space_){
+            rosalloc_space1_ = nullptr;
+          }
+          if(rosalloc_space2_ == main_space_){
+            rosalloc_space2_ = nullptr;
+          }
         }
         // Remove the main space so that we don't try to trim it, this doens't work for debug
         // builds since RosAlloc attempts to read the magic number from a protected page.
