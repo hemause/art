@@ -127,7 +127,8 @@ Heap::Heap(size_t initial_size, size_t growth_limit, size_t min_free, size_t max
            bool verify_post_gc_rosalloc, bool use_homogeneous_space_compaction_for_oom,
            uint64_t min_interval_homogeneous_space_compaction_by_oom)
     : non_moving_space_(nullptr),
-      rosalloc_space_(nullptr),
+      rosalloc_space1_(nullptr),
+      rosalloc_space2_(nullptr),
       dlmalloc_space_(nullptr),
       main_space_(nullptr),
       collector_type_(kCollectorTypeNone),
@@ -1269,16 +1270,7 @@ void Heap::RecordFree(uint64_t freed_objects, int64_t freed_bytes) {
   }
 }
 
-space::RosAllocSpace* Heap::GetRosAllocSpace(bool rep_flg) const {
-  switch(rep_flg){
-    case true:
-      return rosalloc_space1_;
-    case false:
-      return rosalloc_space2_;
-  }
-}
- 
-space::RosAllocSpace* Heap::GetRosAllocSpace(gc::allocator::RosAlloc* rosalloc, bool rep_flg) const {
+space::RosAllocSpace* Heap::GetRosAllocSpace(gc::allocator::RosAlloc* rosalloc, bool rep_flg/* = true*/) const {
   for (const auto& space : continuous_spaces_) {
     if (space->AsContinuousSpace()->IsRosAllocSpace()) {
       if (space->AsContinuousSpace()->AsRosAllocSpace()->GetRosAlloc() == rosalloc) {

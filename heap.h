@@ -523,7 +523,7 @@ class Heap {
     return dlmalloc_space_;
   }
 
-  space::RosAllocSpace* GetRosAllocSpace(bool rep_flg) const {
+  space::RosAllocSpace* GetRosAllocSpace(bool rep_flg/* = true*/) const {
     switch(rep_flg){
       case true:
         return rosalloc_space1_;
@@ -546,19 +546,19 @@ class Heap {
   // Returns the free list space that may contain movable objects (the
   // one that's not the non-moving space), either rosalloc_space_ or
   // dlmalloc_space_.
-  space::MallocSpace* GetPrimaryFreeListSpace(rep_flg = true) {
+  space::MallocSpace* GetPrimaryFreeListSpace(rep_flg/* = true*/) {
     if (kUseRosAlloc) {
       switch(rep_flg){
         case true:
-          DCHECK(rosalloc_space_ != nullptr);
+          DCHECK(rosalloc_space1_ != nullptr);
           // reinterpret_cast is necessary as the space class hierarchy
           // isn't known (#included) yet here.
-          return reinterpret_cast<space::MallocSpace*>(rosalloc_space_);
+          return reinterpret_cast<space::MallocSpace*>(rosalloc_space1_);
         case false:
-          DCHECK(rosalloc_space_ != nullptr);
+          DCHECK(rosalloc_space2_ != nullptr);
           // reinterpret_cast is necessary as the space class hierarchy
           // isn't known (#included) yet here.
-          return reinterpret_cast<space::MallocSpace*>(rosalloc_space_);
+          return reinterpret_cast<space::MallocSpace*>(rosalloc_space2_);
       }
    } else {
       DCHECK(dlmalloc_space_ != nullptr);
