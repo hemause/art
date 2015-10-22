@@ -194,7 +194,7 @@ inline mirror::Object* Heap::AllocLargeObject(Thread* self, mirror::Class** klas
 template <const bool kInstrumented, const bool kGrow>
 inline mirror::Object* Heap::TryToAllocate(Thread* self, AllocatorType allocator_type,
                                            size_t alloc_size, size_t* bytes_allocated,
-                                           size_t* usable_size) {
+                                           size_t* usable_size, bool rep_flg/* = true*/) {
   if (allocator_type != kAllocatorTypeTLAB &&
       UNLIKELY(IsOutOfMemoryOnAllocation<kGrow>(allocator_type, alloc_size))) {
     return nullptr;
@@ -214,10 +214,20 @@ inline mirror::Object* Heap::TryToAllocate(Thread* self, AllocatorType allocator
     case kAllocatorTypeRosAlloc: {
       if (kInstrumented && UNLIKELY(running_on_valgrind_)) {
         // If running on valgrind, we should be using the instrumented path.
-        ret = rosalloc_space_->Alloc(self, alloc_size, bytes_allocated, usable_size);
-      } else {
+        switch(rep_flg){
+          case true:
+            ret = rosalloc_space1_->Alloc(self, alloc_size, bytes_allocated, usable_size);
+          case false:
+            ret = rosalloc_space2_->Alloc(self, alloc_size, bytes_allocated, usable_size);
+        }
+     } else {
         DCHECK(!running_on_valgrind_);
-        ret = rosalloc_space_->AllocNonvirtual(self, alloc_size, bytes_allocated, usable_size);
+        switch(rep_flg){
+          case true:
+            ret = rosalloc_space1_->AllocNonvirtual(self, alloc_size, bytes_allocated, usable_size);
+          case false:
+            ret = rosalloc_space2_->AllocNonvirtual(self, alloc_size, bytes_allocated, usable_size);
+        }
       }
       break;
     }
