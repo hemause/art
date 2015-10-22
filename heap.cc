@@ -781,10 +781,10 @@ void Heap::SetSpaceAsDefault(space::ContinuousSpace* continuous_space, rep_flg/*
   } else if (continuous_space->IsRosAllocSpace()) {
     swtich(rep_flg){
       case true:
-        rosalloc_space_ = continuous_space->AsRosAllocSpace();
+        rosalloc_space1_ = continuous_space->AsRosAllocSpace();
         break;
       case false:
-        rosalloc_space_ = continuous_space->AsRosAllocSpace();
+        rosalloc_space2_ = continuous_space->AsRosAllocSpace();
         break;
     }
   }
