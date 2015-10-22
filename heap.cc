@@ -3182,9 +3182,18 @@ void Heap::RevokeRosAllocThreadLocalBuffers(Thread* thread, bool rep_flg/* = tru
   }
 }
 
-void Heap::RevokeAllThreadLocalBuffers() {
-  if (rosalloc_space_ != nullptr) {
-    rosalloc_space_->RevokeAllThreadLocalBuffers();
+void Heap::RevokeAllThreadLocalBuffers(bool rep_flg/* = true*/) {
+  switch (rep_flg) {
+    case true:
+      if (rosalloc_space1_ != nullptr) {
+        rosalloc_space1_->RevokeAllThreadLocalBuffers();
+      }
+      break;
+    case false:
+      if (rosalloc_space2_ != nullptr) {
+        rosalloc_space2_->RevokeAllThreadLocalBuffers();
+      }
+      break;
   }
   if (bump_pointer_space_ != nullptr) {
     bump_pointer_space_->RevokeAllThreadLocalBuffers();
@@ -3200,7 +3209,7 @@ void Heap::RunFinalization(JNIEnv* env) {
   if (WellKnownClasses::java_lang_System_runFinalization == nullptr) {
     CHECK(WellKnownClasses::java_lang_System != nullptr);
     WellKnownClasses::java_lang_System_runFinalization =
-        CacheMethod(env, WellKnownClasses::java_lang_System, true, "runFinalization", "()V");
+      CacheMethod(env, WellKnownClasses::java_lang_System, true, "runFinalization", "()V");
     CHECK(WellKnownClasses::java_lang_System_runFinalization != nullptr);
   }
   env->CallStaticVoidMethod(WellKnownClasses::java_lang_System,
