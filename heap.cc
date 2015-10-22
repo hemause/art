@@ -3149,9 +3149,18 @@ void Heap::SignalHeapTrimDaemon(Thread* self) {
   CHECK(!env->ExceptionCheck());
 }
 
-void Heap::RevokeThreadLocalBuffers(Thread* thread) {
-  if (rosalloc_space_ != nullptr) {
-    rosalloc_space_->RevokeThreadLocalBuffers(thread);
+void Heap::RevokeThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/) {
+  switch(rep_flg){
+    case true:
+      if (rosalloc_space1_ != nullptr) {
+        rosalloc_space1_->RevokeThreadLocalBuffers(thread);
+      }
+      break;
+    case false:
+      if (rosalloc_space2_ != nullptr) {
+        rosalloc_space2_->RevokeThreadLocalBuffers(thread);
+      }
+      break;
   }
   if (bump_pointer_space_ != nullptr) {
     bump_pointer_space_->RevokeThreadLocalBuffers(thread);
