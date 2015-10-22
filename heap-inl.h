@@ -217,16 +217,20 @@ inline mirror::Object* Heap::TryToAllocate(Thread* self, AllocatorType allocator
         switch(rep_flg){
           case true:
             ret = rosalloc_space1_->Alloc(self, alloc_size, bytes_allocated, usable_size);
+            break;
           case false:
             ret = rosalloc_space2_->Alloc(self, alloc_size, bytes_allocated, usable_size);
+            break;
         }
      } else {
         DCHECK(!running_on_valgrind_);
         switch(rep_flg){
           case true:
             ret = rosalloc_space1_->AllocNonvirtual(self, alloc_size, bytes_allocated, usable_size);
+            break;
           case false:
             ret = rosalloc_space2_->AllocNonvirtual(self, alloc_size, bytes_allocated, usable_size);
+            break;
         }
       }
       break;
