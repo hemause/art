@@ -779,7 +779,7 @@ void Heap::SetSpaceAsDefault(space::ContinuousSpace* continuous_space, rep_flg/*
   if (continuous_space->IsDlMallocSpace()) {
     dlmalloc_space_ = continuous_space->AsDlMallocSpace();
   } else if (continuous_space->IsRosAllocSpace()) {
-    swtich(rep_flg){
+    switch (rep_flg) {
       case true:
         rosalloc_space1_ = continuous_space->AsRosAllocSpace();
         break;
@@ -3150,7 +3150,7 @@ void Heap::SignalHeapTrimDaemon(Thread* self) {
 }
 
 void Heap::RevokeThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/) {
-  switch(rep_flg){
+  switch (rep_flg) {
     case true:
       if (rosalloc_space1_ != nullptr) {
         rosalloc_space1_->RevokeThreadLocalBuffers(thread);
@@ -3167,9 +3167,18 @@ void Heap::RevokeThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/) {
   }
 }
 
-void Heap::RevokeRosAllocThreadLocalBuffers(Thread* thread) {
-  if (rosalloc_space_ != nullptr) {
-    rosalloc_space_->RevokeThreadLocalBuffers(thread);
+void Heap::RevokeRosAllocThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/) {
+  switch (rep_flg) {
+    case true:
+      if (rosalloc_space1_ != nullptr) {
+        rosalloc_space1_->RevokeThreadLocalBuffers(thread);
+      }
+      break;
+    case false:
+      if (rosalloc_space2_ != nullptr) {
+        rosalloc_space2_->RevokeThreadLocalBuffers(thread);
+      }
+      break;
   }
 }
 

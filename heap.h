@@ -524,7 +524,7 @@ class Heap {
   }
 
   space::RosAllocSpace* GetRosAllocSpace(bool rep_flg/* = true*/) const {
-    switch(rep_flg){
+    switch (rep_flg) {
       case true:
         return rosalloc_space1_;
       case false:
@@ -548,7 +548,7 @@ class Heap {
   // dlmalloc_space_.
   space::MallocSpace* GetPrimaryFreeListSpace(rep_flg/* = true*/) {
     if (kUseRosAlloc) {
-      switch(rep_flg){
+      switch (rep_flg) {
         case true:
           DCHECK(rosalloc_space1_ != nullptr);
           // reinterpret_cast is necessary as the space class hierarchy

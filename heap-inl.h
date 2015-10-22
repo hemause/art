@@ -214,7 +214,7 @@ inline mirror::Object* Heap::TryToAllocate(Thread* self, AllocatorType allocator
     case kAllocatorTypeRosAlloc: {
       if (kInstrumented && UNLIKELY(running_on_valgrind_)) {
         // If running on valgrind, we should be using the instrumented path.
-        switch(rep_flg){
+        switch (rep_flg) {
           case true:
             ret = rosalloc_space1_->Alloc(self, alloc_size, bytes_allocated, usable_size);
             break;
@@ -224,7 +224,7 @@ inline mirror::Object* Heap::TryToAllocate(Thread* self, AllocatorType allocator
         }
      } else {
         DCHECK(!running_on_valgrind_);
-        switch(rep_flg){
+        switch (rep_flg) {
           case true:
             ret = rosalloc_space1_->AllocNonvirtual(self, alloc_size, bytes_allocated, usable_size);
             break;
