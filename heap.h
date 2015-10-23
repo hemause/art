@@ -681,7 +681,7 @@ namespace art {
         template <const bool kInstrumented, const bool kGrow>
           ALWAYS_INLINE mirror::Object* TryToAllocate(Thread* self, AllocatorType allocator_type,
               size_t alloc_size, size_t* bytes_allocated,
-              size_t* usable_size)
+              size_t* usable_size, bool rep_flg)
           SHARED_LOCKS_REQUIRED(Locks::mutator_lock_);
 
         void ThrowOutOfMemoryError(Thread* self, size_t byte_count, AllocatorType allocator_type)
