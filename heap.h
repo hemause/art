@@ -802,6 +802,7 @@ class Heap {
 
   // Space which we use for the kAllocatorTypeROSAlloc.
   space::RosAllocSpace* rosalloc_space1_;
+  space::RosAllocSpace* rosalloc_space2_;
 
   // Space which we use for the kAllocatorTypeDlMalloc.
   space::DlMallocSpace* dlmalloc_space_;
