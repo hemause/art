@@ -304,7 +304,7 @@ namespace art {
 
         // Set the heap's private space pointers to be the same as the space based on it's type. Public
         // due to usage by tests.
-        void SetSpaceAsDefault(space::ContinuousSpace* continuous_space)
+        void SetSpaceAsDefault(space::ContinuousSpace* continuous_space, bool rep_flg/* = true*/)
           LOCKS_EXCLUDED(Locks::heap_bitmap_lock_);
         void AddSpace(space::Space* space) LOCKS_EXCLUDED(Locks::heap_bitmap_lock_);
         void RemoveSpace(space::Space* space) LOCKS_EXCLUDED(Locks::heap_bitmap_lock_);
@@ -467,9 +467,9 @@ namespace art {
         // Trim the managed and native heaps by releasing unused memory back to the OS.
         void Trim() LOCKS_EXCLUDED(heap_trim_request_lock_);
 
-        void RevokeThreadLocalBuffers(Thread* thread);
-        void RevokeRosAllocThreadLocalBuffers(Thread* thread);
-        void RevokeAllThreadLocalBuffers();
+        void RevokeThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/);
+        void RevokeRosAllocThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/);
+        void RevokeAllThreadLocalBuffers(bool rep_flg/* = true*/);
         void AssertAllBumpPointerSpaceThreadLocalBuffersAreRevoked();
         void RosAllocVerification(TimingLogger* timings, const char* name)
           EXCLUSIVE_LOCKS_REQUIRED(Locks::mutator_lock_);
@@ -681,7 +681,7 @@ namespace art {
         template <const bool kInstrumented, const bool kGrow>
           ALWAYS_INLINE mirror::Object* TryToAllocate(Thread* self, AllocatorType allocator_type,
               size_t alloc_size, size_t* bytes_allocated,
-              size_t* usable_size, bool rep_flg)
+              size_t* usable_size, bool rep_flg = true)
           SHARED_LOCKS_REQUIRED(Locks::mutator_lock_);
 
         void ThrowOutOfMemoryError(Thread* self, size_t byte_count, AllocatorType allocator_type)

@@ -194,7 +194,7 @@ namespace art {
     template <const bool kInstrumented, const bool kGrow>
       inline mirror::Object* Heap::TryToAllocate(Thread* self, AllocatorType allocator_type,
           size_t alloc_size, size_t* bytes_allocated,
-          size_t* usable_size, bool rep_flg = true) {
+          size_t* usable_size, bool rep_flg) {
         if (allocator_type != kAllocatorTypeTLAB &&
             UNLIKELY(IsOutOfMemoryOnAllocation<kGrow>(allocator_type, alloc_size))) {
           return nullptr;

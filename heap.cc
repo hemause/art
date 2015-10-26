@@ -774,7 +774,7 @@ void Heap::AddSpace(space::Space* space) {
   }
 }
 
-void Heap::SetSpaceAsDefault(space::ContinuousSpace* continuous_space, rep_flg/* = true*/) {
+void Heap::SetSpaceAsDefault(space::ContinuousSpace* continuous_space, rep_flg) {
   WriterMutexLock mu(Thread::Current(), *Locks::heap_bitmap_lock_);
   if (continuous_space->IsDlMallocSpace()) {
     dlmalloc_space_ = continuous_space->AsDlMallocSpace();
@@ -1274,7 +1274,7 @@ void Heap::RecordFree(uint64_t freed_objects, int64_t freed_bytes) {
   }
 }
 
-space::RosAllocSpace* Heap::GetRosAllocSpace(gc::allocator::RosAlloc* rosalloc, bool rep_flg/* = true*/) const {
+space::RosAllocSpace* Heap::GetRosAllocSpace(gc::allocator::RosAlloc* rosalloc, bool rep_flg) const {
   for (const auto& space : continuous_spaces_) {
     if (space->AsContinuousSpace()->IsRosAllocSpace()) {
       if (space->AsContinuousSpace()->AsRosAllocSpace()->GetRosAlloc() == rosalloc) {
@@ -3146,7 +3146,7 @@ void Heap::SignalHeapTrimDaemon(Thread* self) {
   CHECK(!env->ExceptionCheck());
 }
 
-void Heap::RevokeThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/) {
+void Heap::RevokeThreadLocalBuffers(Thread* thread, bool rep_flg) {
   if (rep_flg) {
     if (rosalloc_space1_ != nullptr) {
       rosalloc_space1_->RevokeThreadLocalBuffers(thread);
@@ -3161,7 +3161,7 @@ void Heap::RevokeThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/) {
   }
 }
 
-void Heap::RevokeRosAllocThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/) {
+void Heap::RevokeRosAllocThreadLocalBuffers(Thread* thread, bool rep_flg) {
   if (rep_flg) {
     if (rosalloc_space1_ != nullptr) {
       rosalloc_space1_->RevokeThreadLocalBuffers(thread);
@@ -3173,7 +3173,7 @@ void Heap::RevokeRosAllocThreadLocalBuffers(Thread* thread, bool rep_flg/* = tru
   }
 }
 
-void Heap::RevokeAllThreadLocalBuffers(bool rep_flg/* = true*/) {
+void Heap::RevokeAllThreadLocalBuffers(bool rep_flg) {
   if (rep_flg) {
     if (rosalloc_space1_ != nullptr) {
       rosalloc_space1_->RevokeAllThreadLocalBuffers();
