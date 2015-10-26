@@ -469,7 +469,7 @@ namespace art {
 
         void RevokeThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/);
         void RevokeRosAllocThreadLocalBuffers(Thread* thread, bool rep_flg/* = true*/);
-        void RevokeAllThreadLocalBuffers(bool rep_flg/* = true*/);
+        void RevokeAllThreadLocalBuffers(bool rep_flg = true);
         void AssertAllBumpPointerSpaceThreadLocalBuffersAreRevoked();
         void RosAllocVerification(TimingLogger* timings, const char* name)
           EXCLUSIVE_LOCKS_REQUIRED(Locks::mutator_lock_);
