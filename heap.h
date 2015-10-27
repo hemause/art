@@ -304,7 +304,7 @@ namespace art {
 
         // Set the heap's private space pointers to be the same as the space based on it's type. Public
         // due to usage by tests.
-        void SetSpaceAsDefault(space::ContinuousSpace* continuous_space, bool rep_flg/* = true*/)
+        void SetSpaceAsDefault(space::ContinuousSpace* continuous_space, bool rep_flg = true)
           LOCKS_EXCLUDED(Locks::heap_bitmap_lock_);
         void AddSpace(space::Space* space) LOCKS_EXCLUDED(Locks::heap_bitmap_lock_);
         void RemoveSpace(space::Space* space) LOCKS_EXCLUDED(Locks::heap_bitmap_lock_);
