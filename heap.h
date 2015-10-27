@@ -523,7 +523,7 @@ namespace art {
           return dlmalloc_space_;
         }
 
-        space::RosAllocSpace* GetRosAllocSpace(bool rep_flg/* = true*/) const {
+        space::RosAllocSpace* GetRosAllocSpace(bool rep_flg = true) const {
           if (rep_flg) {
             return rosalloc_space1_;
           } else {
@@ -532,7 +532,7 @@ namespace art {
         }
 
         // Return the corresponding rosalloc space.
-        space::RosAllocSpace* GetRosAllocSpace(gc::allocator::RosAlloc* rosalloc, bool rep_flg/* = true*/) const;
+        space::RosAllocSpace* GetRosAllocSpace(gc::allocator::RosAlloc* rosalloc, bool rep_flg = true) const;
 
         space::MallocSpace* GetNonMovingSpace() const {
           return non_moving_space_;
