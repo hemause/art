@@ -545,7 +545,7 @@ namespace art {
         // Returns the free list space that may contain movable objects (the
         // one that's not the non-moving space), either rosalloc_space_ or
         // dlmalloc_space_.
-        space::MallocSpace* GetPrimaryFreeListSpace(bool rep_flg/* = true*/) {
+        space::MallocSpace* GetPrimaryFreeListSpace(bool rep_flg = true) {
           if (kUseRosAlloc) {
             if (rep_flg) {
               DCHECK(rosalloc_space1_ != nullptr);
