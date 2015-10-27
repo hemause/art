@@ -774,7 +774,7 @@ void Heap::AddSpace(space::Space* space) {
   }
 }
 
-void Heap::SetSpaceAsDefault(space::ContinuousSpace* continuous_space, rep_flg) {
+void Heap::SetSpaceAsDefault(space::ContinuousSpace* continuous_space, bool rep_flg) {
   WriterMutexLock mu(Thread::Current(), *Locks::heap_bitmap_lock_);
   if (continuous_space->IsDlMallocSpace()) {
     dlmalloc_space_ = continuous_space->AsDlMallocSpace();

@@ -532,7 +532,7 @@ namespace art {
         }
 
         // Return the corresponding rosalloc space.
-        space::RosAllocSpace* GetRosAllocSpace(gc::allocator::RosAlloc* rosalloc) const;
+        space::RosAllocSpace* GetRosAllocSpace(gc::allocator::RosAlloc* rosalloc, bool rep_flg/* = true*/) const;
 
         space::MallocSpace* GetNonMovingSpace() const {
           return non_moving_space_;
